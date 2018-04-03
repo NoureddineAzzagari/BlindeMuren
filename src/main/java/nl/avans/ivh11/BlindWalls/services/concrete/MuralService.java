@@ -108,6 +108,7 @@ public class MuralService implements IMuralService {
         m.setName(mural.getName());
         m.setDescription(mural.getDescription());
         m.setArtistName(mural.getArtistName());
+        //
 
         muralRepository.save(m);
     }
