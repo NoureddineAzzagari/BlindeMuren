@@ -8,7 +8,11 @@ import java.util.ArrayList;
 
 public interface IMuralService {
 
-    MuralViewModel getAllMurals(long muralId);
+    Iterable<Mural> getAllMurals();
     boolean getMuralsFromDB();
     ArrayList<Mural> getAllMuralsFromAPI() throws JSONException;
+    void addMural(Mural mural);
+    void deleteMural(Long id);
+    void saveEditedMural(Mural mural);
+    Mural getMural(Long id);
 }

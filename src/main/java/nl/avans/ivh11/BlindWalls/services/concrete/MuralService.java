@@ -32,8 +32,8 @@ public class MuralService implements IMuralService {
     }
 
     @Override
-    public MuralViewModel getAllMurals(long muralId) {
-        return null;
+    public Iterable<Mural> getAllMurals() {
+        return muralRepository.findAll();
     }
 
     @Override
@@ -87,6 +87,31 @@ public class MuralService implements IMuralService {
         return murals;
     }
 
+    @Override
+    public void addMural(Mural mural) {
+        muralRepository.save(mural);
+    }
+
+    @Override
+    public void deleteMural(Long id) {
+        muralRepository.delete(id);
+    }
+
+    @Override
+    public Mural getMural(Long id) {
+        return muralRepository.findOne(id);
+    }
+
+    @Override
+    public void saveEditedMural(Mural mural) {
+        Mural m = muralRepository.findOne(mural.getId());
+        m.setName(mural.getName());
+        m.setDescription(mural.getDescription());
+        m.setArtistName(mural.getArtistName());
+
+        muralRepository.save(m);
+    }
+
     private String getStringFromInputStream(InputStream inputStream) {
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
@@ -113,5 +138,6 @@ public class MuralService implements IMuralService {
         return sb.toString();
 
     }
+
 }
 

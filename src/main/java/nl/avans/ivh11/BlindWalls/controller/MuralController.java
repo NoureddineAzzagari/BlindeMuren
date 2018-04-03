@@ -78,23 +78,37 @@ public class MuralController {
             final BindingResult bindingResult,
             RedirectAttributes redirect) {
 
+        Mural.MuralBuilder muralBuilder = new Mural.MuralBuilder(mural.getName(), mural.getDescription());
+        if (mural.getArtistName() != null) {
+            muralBuilder.artistName(mural.getArtistName());
+        }
+
+        Mural m = muralBuilder.build();
+        muralService.addMural(m);
+
         logger.debug("validateAndSaveMural - adding mural " + mural.getName());
         if (bindingResult.hasErrors()) {
             logger.debug("validateAndSaveMural - not added, bindingResult.hasErrors");
             return new ModelAndView(VIEW_CREATE_MURAL, "formErrors", bindingResult.getAllErrors());
         }
 
-        //
-        // ToDo: volgende acties naar de servicelaag verplaatsen.
-        //
-
-        mural = this.muralRepository.save(mural);
-
-//        redirect.addFlashAttribute("globalMessage", "Successfully created a new message");
-//        return new ModelAndView("redirect:/mural/{mural.id}", "mural.id", mural.getId());
-
-        murals = (ArrayList<Mural>) this.muralRepository.findAll();
+        Iterable<Mural>  murals = muralService.getAllMurals();
         return new ModelAndView(VIEW_LIST_MURALS, "murals", murals);
+
+
+
+//
+//        //
+//        // ToDo: volgende acties naar de servicelaag verplaatsen.
+//        //
+//
+//        mural = this.muralRepository.save(mural);
+//
+////        redirect.addFlashAttribute("globalMessage", "Successfully created a new message");
+////        return new ModelAndView("redirect:/mural/{mural.id}", "mural.id", mural.getId());
+//
+//        murals = (ArrayList<Mural>) this.muralRepository.findAll();
+//        return new ModelAndView(VIEW_LIST_MURALS, "murals", murals);
     }
 
     @GetMapping(value = "{id}/edit")
@@ -109,21 +123,24 @@ public class MuralController {
             @Valid Mural mural,
             final BindingResult bindingResult,
             RedirectAttributes redirect) {
+        Mural.MuralBuilder muralBuilder = new Mural.MuralBuilder(mural.getName(), mural.getDescription());
+        if (mural.getArtistName() != null) {
+            muralBuilder.artistName(mural.getArtistName());
+        }
+
+        Mural existingMural = muralService.getMural(mural.getId());
+        existingMural.setArtistName(mural.getArtistName());
+        existingMural.setDescription(mural.getDescription());
+        existingMural.setName(mural.getName());
+        muralService.saveEditedMural(existingMural);
 
         logger.debug("validateAndSaveMural - adding mural " + mural.getName());
         if (bindingResult.hasErrors()) {
             logger.debug("validateAndSaveMural - not added, bindingResult.hasErrors");
-            return new ModelAndView(VIEW_EDIT_MURAL, "formErrors", bindingResult.getAllErrors());
+            return new ModelAndView(VIEW_CREATE_MURAL, "formErrors", bindingResult.getAllErrors());
         }
 
-        //
-        // ToDo: volgende acties naar de servicelaag verplaatsen.
-        //
-
-        mural.setId(mural.getId());
-        mural = this.muralRepository.save(mural);
-
-        murals = (ArrayList<Mural>) this.muralRepository.findAll();
+        Iterable<Mural>  murals = muralService.getAllMurals();
         return new ModelAndView(VIEW_LIST_MURALS, "murals", murals);
     }
 

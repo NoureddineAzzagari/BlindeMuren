@@ -57,6 +57,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="description">Artiestennaam</label>
+                        <!-- th:field="*{name}" is de koppeling naar het attribuut 'name' van het object 'repository'-->
+                        <input type="text" class="form-control" id="artistName" th:field="*{artistName}"/>
+                        <p th:if="${#fields.hasErrors('artistName')}" th:errors="*{artistName}">Artiestennaam error</p>
+                    </div>
+                </div>
+            </div>
             <!-- De button die voor verzenden van het formulier zorgt.
                 De name 'save' is een parameter waarmee in de MemberController de juiste
                 save-actie wordt gestart. -->
