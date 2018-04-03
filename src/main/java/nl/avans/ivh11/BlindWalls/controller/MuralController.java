@@ -2,6 +2,7 @@ package nl.avans.ivh11.BlindWalls.controller;
 
 import nl.avans.ivh11.BlindWalls.crosscutting.MyExecutionTime;
 import nl.avans.ivh11.BlindWalls.domain.mural.Mural;
+import nl.avans.ivh11.BlindWalls.domain.mural.SearchStrategy;
 import nl.avans.ivh11.BlindWalls.repository.MuralRepository;
 import nl.avans.ivh11.BlindWalls.services.interfaces.IMuralService;
 import nl.avans.ivh11.BlindWalls.viewModel.MuralViewModel;
@@ -142,6 +143,16 @@ public class MuralController {
 
         Iterable<Mural>  murals = muralService.getAllMurals();
         return new ModelAndView(VIEW_LIST_MURALS, "murals", murals);
+    }
+
+    // ToDo: Dit moet uitgewerkt worden
+    @RequestMapping(value = "mural/search")
+    public ModelAndView searchMural(@Valid Mural mural) {
+
+        String name = mural.getName();
+
+
+        return null;
     }
 
     @RequestMapping("")

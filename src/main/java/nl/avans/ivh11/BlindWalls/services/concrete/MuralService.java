@@ -1,6 +1,8 @@
 package nl.avans.ivh11.BlindWalls.services.concrete;
 
 import nl.avans.ivh11.BlindWalls.domain.mural.Mural;
+import nl.avans.ivh11.BlindWalls.domain.mural.NameStrategy;
+import nl.avans.ivh11.BlindWalls.domain.mural.SearchStrategy;
 import nl.avans.ivh11.BlindWalls.repository.MuralRepository;
 import nl.avans.ivh11.BlindWalls.services.interfaces.IMuralService;
 import nl.avans.ivh11.BlindWalls.viewModel.MuralViewModel;
@@ -25,6 +27,8 @@ public class MuralService implements IMuralService {
 
     private static final Logger logger = LoggerFactory.getLogger(MuralService.class);
     private final MuralRepository muralRepository;
+
+    private SearchStrategy searchStrategy;
 
     @Autowired
     public MuralService(MuralRepository muralRepository) {
@@ -103,6 +107,12 @@ public class MuralService implements IMuralService {
     }
 
     @Override
+    public Iterable<Mural> searchMuralWithName(String name) {
+        this.setStrategy(new NameStrategy());
+        return searchStrategy.searchMural(name, muralRepository.findAll());
+    }
+
+    @Override
     public void saveEditedMural(Mural mural) {
         Mural m = muralRepository.findOne(mural.getId());
         m.setName(mural.getName());
@@ -140,5 +150,8 @@ public class MuralService implements IMuralService {
 
     }
 
+    private void setStrategy(final SearchStrategy strategy) {
+        this.searchStrategy = strategy;
+    }
 }
 
