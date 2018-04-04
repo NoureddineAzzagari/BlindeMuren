@@ -1,4 +1,6 @@
-package nl.avans.ivh11.BlindWalls.domain;public class Statistics {
+package nl.avans.ivh11.BlindWalls.domain;
+
+public class Statistics {
 
     //create an object of Statistics. search starts at 0
     private static Statistics instance = new Statistics();
@@ -19,6 +21,7 @@ package nl.avans.ivh11.BlindWalls.domain;public class Statistics {
 
     public void addSearch() {
         this.amountSearch++;
+
     }
 
 }
