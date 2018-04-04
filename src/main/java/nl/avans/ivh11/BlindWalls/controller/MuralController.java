@@ -2,7 +2,7 @@ package nl.avans.ivh11.BlindWalls.controller;
 
 import nl.avans.ivh11.BlindWalls.crosscutting.MyExecutionTime;
 import nl.avans.ivh11.BlindWalls.domain.mural.Mural;
-import nl.avans.ivh11.BlindWalls.domain.mural.SearchStrategy;
+import nl.avans.ivh11.BlindWalls.domain.mural.lastMuralsViewed;
 import nl.avans.ivh11.BlindWalls.repository.MuralRepository;
 import nl.avans.ivh11.BlindWalls.services.interfaces.IMuralService;
 import nl.avans.ivh11.BlindWalls.viewModel.MuralViewModel;
@@ -28,6 +28,7 @@ public class MuralController {
 
     private final Logger logger = LoggerFactory.getLogger(MuralController.class);
     private ArrayList<Mural> murals = new ArrayList<>();
+    lastMuralsViewed lastviewed = new lastMuralsViewed();
 
     // Views constants
     private final String VIEW_LIST_MURALS = "views/mural/list";
@@ -64,6 +65,8 @@ public class MuralController {
 
     @GetMapping("{id}")
     public ModelAndView view(@PathVariable("id") Mural mural) {
+        // add the mural being viewed to last viewed list.
+        lastviewed.add(mural);
         return new ModelAndView(VIEW_READ_MURAL, "mural", mural);
     }
 
