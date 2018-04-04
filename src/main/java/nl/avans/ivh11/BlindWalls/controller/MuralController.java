@@ -151,7 +151,6 @@ public class MuralController {
         return new ModelAndView(VIEW_LIST_MURALS, "murals", murals);
     }
 
-    // ToDo: Dit moet uitgewerkt worden
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public ModelAndView searchMurall(@RequestParam("search") String search, @RequestParam("searchstrategy") String searchstrategy) {
 
