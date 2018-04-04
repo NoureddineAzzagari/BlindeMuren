@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @CrossOrigin
@@ -157,7 +158,9 @@ public class MuralController {
         Iterable<Mural> m = new ArrayList<>();
 
         if (search != null) {
+            // pass the searchstring and selected strategy to the method
             m = muralService.searchMural(search, searchstrategy);
+            // add one to searchrequests for the statistics singletons
             s.addSearch();
         }
 
@@ -167,24 +170,25 @@ public class MuralController {
     @RequestMapping(value = "/lastviewed")
     public ModelAndView lastMuralsViewed (){
         // make new mural list
-        Iterable<Mural> m = new ArrayList<>();
+        List<Mural> m = new ArrayList<>();
         // add the latest 5 murals in it. To do this look at the index then -5 as start and go up to 5 murals.
         int size = lastviewed.mementoList.size();
         if (size <= 5) {
             // add all murals in list through this
-            for(int i=1; i<=size; i++){
-                // to do
+            for(int i=0; i<size; i++){
+                m.add(lastviewed.get(i));
             }
         }
         else {
             int start = size - 5;
             // add mural for the start index etc.
-            for(int i=start; i<=size; i++){
-                // to do
+            for(int i=start; i<size; i++){
+                m.add(lastviewed.get(i));
             }
         }
+        Iterable<Mural> murals = m;
         // then return these in a view
-        return new ModelAndView(VIEW_LAST_MURAL, "murals", m);
+        return new ModelAndView(VIEW_LAST_MURAL, "murals", murals);
     }
     @RequestMapping("")
     public MuralViewModel getMuralsFromDB() {
