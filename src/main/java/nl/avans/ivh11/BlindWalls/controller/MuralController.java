@@ -49,8 +49,8 @@ public class MuralController {
     @MyExecutionTime
     @GetMapping
     public String listMurals(
-            @RequestParam(value="category", required=false, defaultValue="all") String category,
-            @RequestParam(value="size", required=false, defaultValue="10") String size,
+            @RequestParam(value = "category", required = false, defaultValue = "all") String category,
+            @RequestParam(value = "size", required = false, defaultValue = "10") String size,
             Model model) {
 
         logger.debug("listMurals called.");
@@ -67,13 +67,13 @@ public class MuralController {
         return new ModelAndView(VIEW_READ_MURAL, "mural", mural);
     }
 
-    @RequestMapping(value="/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String showCreateMuralForm(final Mural mural, final ModelMap model) {
         logger.debug("showCreateMuralForm");
         return VIEW_CREATE_MURAL;
     }
 
-    @RequestMapping(value="/new", method = RequestMethod.POST)
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
     public ModelAndView validateAndSaveMural(
             @Valid Mural mural,
             final BindingResult bindingResult,
@@ -93,9 +93,8 @@ public class MuralController {
             return new ModelAndView(VIEW_CREATE_MURAL, "formErrors", bindingResult.getAllErrors());
         }
 
-        Iterable<Mural>  murals = muralService.getAllMurals();
+        Iterable<Mural> murals = muralService.getAllMurals();
         return new ModelAndView(VIEW_LIST_MURALS, "murals", murals);
-
 
 
 //
@@ -119,7 +118,7 @@ public class MuralController {
         return new ModelAndView(VIEW_EDIT_MURAL, "mural", mural);
     }
 
-    @RequestMapping(value="/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView validateAndEditMural(
             @Valid Mural mural,
             final BindingResult bindingResult,
@@ -141,18 +140,21 @@ public class MuralController {
             return new ModelAndView(VIEW_CREATE_MURAL, "formErrors", bindingResult.getAllErrors());
         }
 
-        Iterable<Mural>  murals = muralService.getAllMurals();
+        Iterable<Mural> murals = muralService.getAllMurals();
         return new ModelAndView(VIEW_LIST_MURALS, "murals", murals);
     }
 
     // ToDo: Dit moet uitgewerkt worden
-    @RequestMapping(value = "mural/search")
-    public ModelAndView searchMural(@Valid Mural mural) {
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public ModelAndView searchMurall(@RequestParam("search") String search, @RequestParam("searchstrategy") String searchstrategy) {
 
-        String name = mural.getName();
+        Iterable<Mural> m = new ArrayList<>();
 
+        if (search != null) {
+            m = muralService.searchMural(search, searchstrategy);
+        }
 
-        return null;
+        return new ModelAndView(VIEW_LIST_MURALS, "murals", m);
     }
 
     @RequestMapping("")
@@ -160,7 +162,7 @@ public class MuralController {
         if (!muralService.getMuralsFromDB()) {
             try {
                 muralService.getAllMuralsFromAPI();
-            } catch(JSONException e) {
+            } catch (JSONException e) {
 
             }
         }

@@ -12,10 +12,23 @@
         <h1>Lijst van muren</h1>
     </div>
 
+    <!--<div class="col-sm-3 col-md-3 pull-right">-->
+        <!--<form class="navbar-form" role="search" action="#" th:action="@{/mural/search}" th:object="${mural}" modelAttribute="mural"> &lt;!&ndash;th:object="${mural}"&ndash;&gt;-->
+            <!--<input type="text" class="form-control" placeholder="Search" name="searchterm" id="searchterm" th:field="*{name}"/>-->
+            <!--<div class="input-group-btn">-->
+                <!--<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</div>-->
+
     <div class="col-sm-3 col-md-3 pull-right">
-        <form class="navbar-form" role="search" action="#" th:action="@{/mural/search}"> <!--th:object="${mural}"-->
-            <input type="text" class="form-control" placeholder="Search" name="searchterm" id="searchterm"/>
-                   <!--th:field="*{name}"-->
+        <form class="navbar-form" role="search" action="#" method="post" th:action="@{/mural/search}">
+            <input type="text" class="form-control" placeholder="Search" name="search" id="search"/>
+            <select name="searchstrategy" id="searchstrategy">
+                <option value="id">MuralID</option>
+                <option value="name">Name</option>
+                <option value="description">Description</option>
+            </select>
             <div class="input-group-btn">
                 <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
             </div>
@@ -32,6 +45,7 @@
             <th>Id</th>
             <th>Naam</th>
             <th>Omschrijving</th>
+            <th>Artiestennaam</th>
         </tr>
         </thead>
         <tbody>
@@ -39,6 +53,7 @@
             <td th:text="${mural.id}">Id</td>
             <td><a th:href="@{/mural/{id}(id=${mural.id})}" th:text="${mural.name}">Naam</a></td>
             <td th:text="${mural.description}">Omschrijving</td>
+            <td th:text="${mural.artistName}">Artiestnaam</td>
         </tr>
         </tbody>
     </table>

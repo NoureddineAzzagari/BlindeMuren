@@ -1,5 +1,6 @@
 package nl.avans.ivh11.BlindWalls.services.concrete;
 
+import nl.avans.ivh11.BlindWalls.domain.mural.IdStrategy;
 import nl.avans.ivh11.BlindWalls.domain.mural.Mural;
 import nl.avans.ivh11.BlindWalls.domain.mural.NameStrategy;
 import nl.avans.ivh11.BlindWalls.domain.mural.SearchStrategy;
@@ -80,6 +81,7 @@ public class MuralService implements IMuralService {
             mural.setId((long) jsonArray.getJSONObject(i).getInt("id"));
             mural.setName(jsonArray.getJSONObject(i).getString("title"));
             mural.setDescription(jsonArray.getJSONObject(i).getString("description"));
+//            mural.setArtistName(jsonArray.getJSONObject(i).getString("author"));
 
             murals.add(mural);
         }
@@ -107,8 +109,13 @@ public class MuralService implements IMuralService {
     }
 
     @Override
-    public Iterable<Mural> searchMuralWithName(String name) {
-        this.setStrategy(new NameStrategy());
+    public Iterable<Mural> searchMural(String name, String strategy) {
+        if (strategy.equals("name")) {
+            this.setStrategy(new NameStrategy());
+        } else if(strategy.equals("id")) {
+            this.setStrategy(new IdStrategy());
+        }
+
         return searchStrategy.searchMural(name, muralRepository.findAll());
     }
 

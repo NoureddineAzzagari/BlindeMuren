@@ -17,15 +17,33 @@ class NameStrategy extends SearchStrategy {
   override def searchMural(searchString: String, murals: lang.Iterable[Mural]): lang.Iterable[Mural] = {
     val searchedMurals : util.ArrayList[Mural] = new util.ArrayList[Mural]()
     for (mural: Mural <- murals.asScala) {
-      val muralName = mural.asInstanceOf[Mural].getClass.getName.toLowerCase
+      val muralName = mural.asInstanceOf[Mural].getName.toLowerCase
       val searchedMural = muralName match {
         case `muralName` if muralName.contains(searchString.toLowerCase) => mural
         case _ => null
       }
       if (searchedMural != null) {
-        searchedMurals.add(mural);
+        searchedMurals.add(mural)
       }
     }
-    searchedMurals;
+    searchedMurals
+  }
+}
+
+class IdStrategy extends SearchStrategy {
+
+  override def searchMural(searchString: String, murals: lang.Iterable[Mural]) : lang.Iterable[Mural] = {
+    val searchedMurals : util.ArrayList[Mural] = new util.ArrayList[Mural]()
+    for (mural: Mural <- murals.asScala) {
+      val muralId = mural.asInstanceOf[Mural].getId
+      val searchedMural = muralId match {
+        case `muralId` if muralId == searchString.toInt => mural
+        case _ => null
+      }
+      if (searchedMural != null) {
+        searchedMurals.add(mural)
+      }
+    }
+    searchedMurals
   }
 }

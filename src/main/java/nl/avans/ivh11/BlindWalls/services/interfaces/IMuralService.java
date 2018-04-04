@@ -15,5 +15,5 @@ public interface IMuralService {
     void deleteMural(Long id);
     void saveEditedMural(Mural mural);
     Mural getMural(Long id);
-    Iterable<Mural> searchMuralWithName(String name);
+    Iterable<Mural> searchMural(String name, String searchStrategy);
 }
