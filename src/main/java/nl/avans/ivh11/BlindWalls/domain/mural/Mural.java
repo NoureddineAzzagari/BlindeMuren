@@ -3,11 +3,13 @@ package nl.avans.ivh11.BlindWalls.domain.mural;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -20,10 +22,14 @@ public class Mural {
     @Column(name="id")
     private Long id;
     @Column(name="description")
+    @NotEmpty(message = "{validation.description.NotEmpty.message}")
+    @Size(min = 10, max = 10000, message = "{validation.description.Size.message}")
     private String description;
     @Column(name="artistname")
     private String artistName;
     @Column(name="name")
+    @NotEmpty(message = "{validation.name.NotEmpty.message}")
+    @Size(min = 1, max = 100, message = "{validation.name.Size.message}")
     private String name;
 
     private Mural(MuralBuilder muralBuilder) {

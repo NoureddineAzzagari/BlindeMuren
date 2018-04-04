@@ -25,6 +25,5 @@ public class MyExecutionTimeAspect {
         long duration = System.currentTimeMillis() - startMillis;
         System.out.println("(AOP-myExecTime) Call to " + joinPoint.getSignature() + " took " + duration + " ms");
         return retVal;
-
     }
 }

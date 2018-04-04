@@ -7,16 +7,22 @@ package nl.avans.ivh11.BlindWalls.domain.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.avans.ivh11.BlindWalls.domain.mural.Mural;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class User {
+
+    @OneToMany(cascade = javax.persistence.CascadeType.ALL)
+    private List<Mural> murals;
 
     @Id
     @GeneratedValue
@@ -39,6 +45,7 @@ public class User {
         this.password = builder.password;
         this.emailaddress = builder.emailAddress;
         this.isadmin = builder.isAdmin;
+        this.murals = builder.listMurals;
     }
 
     public static class UserBuilder {
@@ -50,6 +57,7 @@ public class User {
         private final String password;
         private final String emailAddress;
         private boolean isAdmin;
+        private List<Mural> listMurals;
 
         public UserBuilder(String firstName, String lastName, String userName, String password, String emailAddress) {
             this.firstName = firstName;
@@ -67,6 +75,11 @@ public class User {
 
         public UserBuilder address(String address){
             this.address = address;
+            return this;
+        }
+
+        public UserBuilder murals(List<Mural> listMurals) {
+            this.listMurals = listMurals;
             return this;
         }
 

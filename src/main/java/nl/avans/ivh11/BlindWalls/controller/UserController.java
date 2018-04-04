@@ -3,6 +3,7 @@ package nl.avans.ivh11.BlindWalls.controller;
 /**
  * Created by thomasdelhez on 12-03-18.
  */
+import nl.avans.ivh11.BlindWalls.domain.mural.Mural;
 import nl.avans.ivh11.BlindWalls.domain.user.User;
 import nl.avans.ivh11.BlindWalls.model.LoginViewModel;
 import nl.avans.ivh11.BlindWalls.repository.UserRepository;
@@ -14,10 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,6 +35,7 @@ public class UserController {
     private final String VIEW_CREATE_USER = "views/login/newUser";
     private final String VIEW_LIST_USERS = "views/login/list";
     private final String VIEW_LOGIN_USER = "views/login/userLogin";
+    private final String VIEW_EDIT_USER = "views/login/editUser";
 
     @Autowired
     private UserRepository userRepository = null;
@@ -123,10 +122,7 @@ public class UserController {
         UserService userService = new UserService(userRepository);
         userService.addUser(user);
 
-        //users = userService.getAllUsers();
-
         users = (ArrayList<User>) this.userRepository.findAll();
         return new ModelAndView(VIEW_LIST_USERS, "users", users);
     }
-
 }
