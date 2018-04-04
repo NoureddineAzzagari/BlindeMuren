@@ -95,20 +95,6 @@ public class MuralController {
 
         Iterable<Mural> murals = muralService.getAllMurals();
         return new ModelAndView(VIEW_LIST_MURALS, "murals", murals);
-
-
-//
-//        //
-//        // ToDo: volgende acties naar de servicelaag verplaatsen.
-//        //
-//
-//        mural = this.muralRepository.save(mural);
-//
-////        redirect.addFlashAttribute("globalMessage", "Successfully created a new message");
-////        return new ModelAndView("redirect:/mural/{mural.id}", "mural.id", mural.getId());
-//
-//        murals = (ArrayList<Mural>) this.muralRepository.findAll();
-//        return new ModelAndView(VIEW_LIST_MURALS, "murals", murals);
     }
 
     @GetMapping(value = "{id}/edit")
@@ -144,7 +130,6 @@ public class MuralController {
         return new ModelAndView(VIEW_LIST_MURALS, "murals", murals);
     }
 
-    // ToDo: Dit moet uitgewerkt worden
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public ModelAndView searchMurall(@RequestParam("search") String search, @RequestParam("searchstrategy") String searchstrategy) {
 

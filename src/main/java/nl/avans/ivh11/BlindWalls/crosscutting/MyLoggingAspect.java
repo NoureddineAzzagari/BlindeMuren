@@ -20,6 +20,10 @@ public class MyLoggingAspect {
     public void dummyMethod() { // the pointcut signature
     }
 
+    /**
+     * Advice wordt uitgevoerd voor het join point
+     * @param joinPoint
+     */
     @Before("dummyMethod()")
     public void loggingBeforeAdvice(JoinPoint joinPoint) {
         System.out.println("(AOP-myLogger) Executing: "
@@ -28,6 +32,9 @@ public class MyLoggingAspect {
                 + joinPoint.getSignature().getName());
     }
 
+    /**
+     * Er wordt geadviseerd zowel voor als na methode invocatie
+     */
     @Around("dummyMethod()")
     public Object loggingAroundAdvice(ProceedingJoinPoint pjp)
             throws Throwable {
