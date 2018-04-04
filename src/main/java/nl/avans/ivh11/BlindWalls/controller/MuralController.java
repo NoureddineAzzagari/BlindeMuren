@@ -1,6 +1,7 @@
 package nl.avans.ivh11.BlindWalls.controller;
 
 import nl.avans.ivh11.BlindWalls.crosscutting.MyExecutionTime;
+import nl.avans.ivh11.BlindWalls.domain.Statistics;
 import nl.avans.ivh11.BlindWalls.domain.mural.Mural;
 import nl.avans.ivh11.BlindWalls.domain.mural.lastMuralsViewed;
 import nl.avans.ivh11.BlindWalls.repository.MuralRepository;
@@ -29,12 +30,14 @@ public class MuralController {
     private final Logger logger = LoggerFactory.getLogger(MuralController.class);
     private ArrayList<Mural> murals = new ArrayList<>();
     lastMuralsViewed lastviewed = new lastMuralsViewed();
+    Statistics s = Statistics.getInstance();
 
     // Views constants
     private final String VIEW_LIST_MURALS = "views/mural/list";
     private final String VIEW_CREATE_MURAL = "views/mural/create";
     private final String VIEW_READ_MURAL = "views/mural/read";
     private final String VIEW_EDIT_MURAL = "views/mural/edit";
+    private final String VIEW_LAST_MURAL = "views/mural/lastviewed";
 
     @Autowired
     private final MuralRepository muralRepository;
@@ -155,11 +158,34 @@ public class MuralController {
 
         if (search != null) {
             m = muralService.searchMural(search, searchstrategy);
+            s.addSearch();
         }
 
         return new ModelAndView(VIEW_LIST_MURALS, "murals", m);
     }
 
+    @RequestMapping(value = "/lastviewed")
+    public ModelAndView lastMuralsViewed (){
+        // make new mural list
+        Iterable<Mural> m = new ArrayList<>();
+        // add the latest 5 murals in it. To do this look at the index then -5 as start and go up to 5 murals.
+        int size = lastviewed.mementoList.size();
+        if (size <= 5) {
+            // add all murals in list through this
+            for(int i=1; i<=size; i++){
+                // to do
+            }
+        }
+        else {
+            int start = size - 5;
+            // add mural for the start index etc.
+            for(int i=start; i<=size; i++){
+                // to do
+            }
+        }
+        // then return these in a view
+        return new ModelAndView(VIEW_LAST_MURAL, "murals", m);
+    }
     @RequestMapping("")
     public MuralViewModel getMuralsFromDB() {
         if (!muralService.getMuralsFromDB()) {

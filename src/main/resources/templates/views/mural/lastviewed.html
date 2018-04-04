@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head :: head"></head>
+<body>
+
+<!-- Header -->
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Lijst van de 5 laatst bekeken muren</h1>
+    </div>
+
+    <div th:if="${murals.empty}">
+        <p>Geen muren gevonden.</p>
+    </div>
+
+    <table th:if="!${murals.empty}" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Naam</th>
+            <th>Omschrijving</th>
+            <th>Artiestennaam</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="mural : ${murals}">
+            <td th:text="${mural.id}">Id</td>
+            <td><a th:href="@{/mural/{id}(id=${mural.id})}" th:text="${mural.name}">Naam</a></td>
+            <td th:text="${mural.description}">Omschrijving</td>
+            <td th:text="${mural.artistName}">Artiestnaam</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer class="footer">
+    // show amount of searches
+    <div th:replace="fragments/footer :: footer"></div>
+</footer>
+</body>
+</html>

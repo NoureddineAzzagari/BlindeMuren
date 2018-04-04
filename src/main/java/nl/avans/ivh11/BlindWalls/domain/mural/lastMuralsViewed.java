@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class lastMuralsViewed {
-    private List<Mural> mementoList = new ArrayList<Mural>();
+    public List<Mural> mementoList = new ArrayList<Mural>();
 
     public void add(Mural state){
         mementoList.add(state);
