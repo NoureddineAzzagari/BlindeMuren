@@ -3,7 +3,7 @@ package nl.avans.ivh11.BlindWalls.controller;
 import nl.avans.ivh11.BlindWalls.crosscutting.MyExecutionTime;
 import nl.avans.ivh11.BlindWalls.domain.Statistics;
 import nl.avans.ivh11.BlindWalls.domain.mural.Mural;
-import nl.avans.ivh11.BlindWalls.domain.mural.lastMuralsViewed;
+import nl.avans.ivh11.BlindWalls.domain.mural.LastMuralsViewed;
 import nl.avans.ivh11.BlindWalls.repository.MuralRepository;
 import nl.avans.ivh11.BlindWalls.services.interfaces.IMuralService;
 import nl.avans.ivh11.BlindWalls.viewModel.MuralViewModel;
@@ -30,7 +30,7 @@ public class MuralController {
 
     private final Logger logger = LoggerFactory.getLogger(MuralController.class);
     private ArrayList<Mural> murals = new ArrayList<>();
-    lastMuralsViewed lastviewed = new lastMuralsViewed();
+    LastMuralsViewed lastviewed = new LastMuralsViewed();
     Statistics s = Statistics.getInstance();
 
     // Views constants
