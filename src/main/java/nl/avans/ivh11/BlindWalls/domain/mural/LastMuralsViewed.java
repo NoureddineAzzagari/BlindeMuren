@@ -4,7 +4,7 @@ package nl.avans.ivh11.BlindWalls.domain.mural; /**
 import java.util.ArrayList;
 import java.util.List;
 
-public class lastMuralsViewed {
+public class LastMuralsViewed {
     public List<Mural> mementoList = new ArrayList<Mural>();
 
     public void add(Mural state){
